@@ -13,11 +13,12 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @MappedSuperclass
-@EntityListeners(BaseEntityListener.class)
 public abstract class BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
+
+    private Boolean isDeleted = false;
 
     @Column(nullable = false, updatable = false)
     private LocalDateTime insertDateTime;
@@ -28,5 +29,18 @@ public abstract class BaseEntity {
     @Column(nullable = false)
     private Long lastUpdateUserId;
 
-    private Boolean isDeleted = false;
+
+    @PrePersist
+    private void onPrePersist() {
+        this.insertDateTime = LocalDateTime.now();
+        this.lastUpdateDateTime = LocalDateTime.now();
+        this.insertUserId = 1L;
+        this.lastUpdateUserId = 1L;
+    }
+
+    @PreUpdate
+    private void onPreUpdate() {
+        this.lastUpdateDateTime = LocalDateTime.now();
+        this.lastUpdateUserId = 1L;
+    }
 }
