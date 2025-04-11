@@ -7,10 +7,10 @@ public enum Gender {
     MALE("Male"),
     FEMALE("Female");
 
-    private final String displayName;
+    private final String value;
 
-    Gender(String displayName) {
-        this.displayName = displayName;
+    Gender(String value) {
+        this.value = value;
     }
 
 

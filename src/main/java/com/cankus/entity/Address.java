@@ -22,11 +22,11 @@ public class Address extends BaseEntity {
     private String phoneNumber;
 
     // Ek adres bilgisi (opsiyonel)
-    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private State addressInfo;
+    private String addressInfo;
 
     // Kullanıcının yaşadığı eyalet (enum yerine manuel string)
     @Column(nullable = false)
-    private String state;
+    @Enumerated(EnumType.STRING)
+    private State state;
 }

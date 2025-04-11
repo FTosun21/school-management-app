@@ -6,7 +6,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
 @Component
-//@RequiredArgsConstructor
 public class UserMapper {
 
     private final ModelMapper modelMapper;
@@ -16,14 +15,12 @@ public class UserMapper {
     }
 
     // DTO -> Entity
-    public User covertToEntity(UserDto userDto){
+    public User covertToEntity(UserDto userDto) {
         return modelMapper.map(userDto, User.class);
     }
 
     // Entity -> DTO
-    public UserDto covertToDto(User user){
+    public UserDto covertToDto(User user) {
         return modelMapper.map(user, UserDto.class);
     }
-
-
 }

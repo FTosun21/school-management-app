@@ -1,9 +1,8 @@
 package com.cankus.enums;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-@AllArgsConstructor
+
 @Getter
 public enum State {
     ALABAMA("Alabama", "AL"), ALASKA("Alaska", "AK"), AMERICAN_SAMOA("American Samoa", "AS"), ARIZONA("Arizona", "AZ"), ARKANSAS(
@@ -25,4 +24,9 @@ public enum State {
     private final String name;
     private final String abbreviation;
 
+
+    State(String name, String abbreviation) {
+        this.name = name;
+        this.abbreviation = abbreviation;
+    }
 }

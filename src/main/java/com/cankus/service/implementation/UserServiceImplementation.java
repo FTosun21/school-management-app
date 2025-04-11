@@ -4,14 +4,12 @@ import com.cankus.dto.UserDto;
 import com.cankus.mapper.UserMapper;
 import com.cankus.repository.UserRepository;
 import com.cankus.service.UserService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-//@RequiredArgsConstructor
 public class UserServiceImplementation implements UserService {
 
 
