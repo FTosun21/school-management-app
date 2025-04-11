@@ -1,12 +1,14 @@
 package com.cankus.service.implementation;
 
 import com.cankus.dto.RoleDto;
+import com.cankus.entity.Role;
 import com.cankus.mapper.RoleMapper;
 import com.cankus.repository.RoleRepository;
 import com.cankus.service.RoleService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Service
@@ -26,4 +28,12 @@ public class RoleServiceImplementation implements RoleService {
         return roleRepository.findAll().stream()
                 .map(roleMapper::covertToDto).collect(Collectors.toList());
     }
+
+    @Override
+    public RoleDto findById(Long id) {
+        Role roleInDB = roleRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Role could not be found"));
+        return roleMapper.covertToDto(roleInDB);
+    }
+
+
 }

@@ -24,7 +24,7 @@ public class User extends BaseEntity {
     private String lastName;
 
     // Kullanıcı adı, benzersiz olmalı
-    @Column(nullable = false, unique = true)
+    //@Column( unique = true)
     private String userName;
 
     // Şifre
@@ -34,7 +34,6 @@ public class User extends BaseEntity {
     @Column(name = "confirm_password")
     private String confirmPassword;
 
-    @Column(nullable = false)
     private Boolean enabled;
 
     // Cinsiyet enum olarak gelir, veritabanına string yazılır
