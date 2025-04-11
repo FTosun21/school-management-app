@@ -57,8 +57,7 @@
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<version>1.18.30</version> <!-- En güncel versiyonu kullan -->
-			<scope>provided</scope>  <!-- Optional yerine bunu kullan -->
+			<optional>true</optional>
 		</dependency>
 
 		<dependency>
