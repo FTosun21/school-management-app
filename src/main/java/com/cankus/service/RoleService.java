@@ -9,4 +9,6 @@ public interface RoleService {
 
     // Tüm kullanıcıları getir
     List<RoleDto> findAll();
+    //
+    RoleDto findById(Long id);
 }

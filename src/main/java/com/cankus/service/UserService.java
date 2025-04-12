@@ -9,6 +9,12 @@ public interface UserService {
     // Tüm kullanıcıları getir
     List<UserDto> findAll();
 
+    boolean isEmailRegistered(String email);
+
+    boolean isPasswordMatched(String password, String confirmPassword);
+
+    void save(UserDto userDto);
+
 
 
 }

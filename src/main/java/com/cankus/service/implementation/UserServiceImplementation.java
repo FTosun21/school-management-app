@@ -1,6 +1,7 @@
 package com.cankus.service.implementation;
 
 import com.cankus.dto.UserDto;
+import com.cankus.entity.User;
 import com.cankus.mapper.UserMapper;
 import com.cankus.repository.UserRepository;
 import com.cankus.service.UserService;
@@ -26,8 +27,29 @@ public class UserServiceImplementation implements UserService {
         return userRepository.findAll().stream()
                 .map(userMapper::covertToDto).collect(Collectors.toList());
     }
+
+    @Override
+    public boolean isEmailRegistered(String email) {
+        return userRepository.findAll().stream().anyMatch(user -> user.getUserName().equals(email));
+    }
+
+    @Override
+    public boolean isPasswordMatched(String password, String confirmPassword) {
+        return !password.equals(confirmPassword);
+    }
+
+    //Todo security implement edilirken yeniden dön
+    @Override
+    public void save(UserDto userDto) {
+        User user = userMapper.covertToEntity(userDto);
+        userRepository.save(user);
+
+    }
     //lambda expression method refrains  çalış
 
+
+}
+/*
 //
 //    @Override
 //    public List<UserDto> getAllUsers() {
@@ -77,4 +99,4 @@ public class UserServiceImplementation implements UserService {
 //        user.setIsDeleted(true); // Soft delete
 //        userRepository.save(user);
 //    }
-}
+ */
