@@ -86,33 +86,15 @@ public class UserController {
         return "redirect:/user/create";
     }
 
+    @GetMapping("/delete/{id}")
+    public String deleteUser(@PathVariable Long id,RedirectAttributes redirectAttributes){
+        //Todo role kısmı user story e göre düzenlenecek
+
+
+        userService.delete(id);
+        return "redirect:/user/create";
+
+    }
+
 
 }
-    /*
-        1- UserService içerisinde method oluştur
-        2- UserServiceİmpl içinde isEmailRegistered() oluştur
-        3- UserController --> username unique olmalı  if condition ile db kontrol için error oluştur
-        4- UserService --> isPasswordMatched() oluştur
-        5- UserServiceImpl--> isPasswordMatched() methodu çağır
-        6- UserController --> // password ve confirmPassword match olmalı if cond.
-        7- UserController--> // hata alınca formun yenilenmesi gerek
-        8- UserService   -->  kullanıcıyı kaydet save()
-        9- UserServiceImpl -->    kullanıcıyı kaydet save() --> To do security implement edilirken yeniden dön
-        10 UserController--> userService.save(user);--> UserController return "redirect:/user/create";
-        11-Role için converter yapısı önemli
-        12- --> RoleService --> findById() ekle
-        13- --> UserServiceImpl git findById() tamamla
-        14- --> RoleDtoConverter class--> convert() yap
-
-     */
-
-/*  controllerda getCreatePage() ile tüm user listi için
-    1- repository --> list için default methodlar yeterli
-    2- service interface içinde listeleme methodu gerek
-    3- serviceimpl -->  find all method oluşturulacak
-    4- UserMapper-->findAll method için userMapper içinde ModelMapper objesi oluşturmak gerek
-    5- Main method --> modelMapper için Bean annotation ile ModelMapper bean oluştur
-    6- UserMapper --> private final ModelMapper modelMapper; oluşturuldu ve // DTO -> Entity // Entity -> DTO mthodlar
-    7- iplementation --> findAll() meythod ve //lambda expression method refrains  çalış
-    8- userController-->  getCreatePage() metghodu tamamla
- */
