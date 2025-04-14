@@ -11,7 +11,7 @@ public abstract class BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Boolean isDeleted = false;
+    private boolean isDeleted = false;
 
     @Column(nullable = false, updatable = false)
     private LocalDateTime insertDateTime;
@@ -57,11 +57,11 @@ public abstract class BaseEntity {
         this.id = id;
     }
 
-    public Boolean getDeleted() {
+    public boolean isDeleted() {
         return isDeleted;
     }
 
-    public void setDeleted(Boolean deleted) {
+    public void setDeleted(boolean deleted) {
         isDeleted = deleted;
     }
 

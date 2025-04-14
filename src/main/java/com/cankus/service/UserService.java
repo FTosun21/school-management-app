@@ -19,7 +19,7 @@ public interface UserService {
 
     void update(UserDto userDto);
 
-
+    void delete(Long id);
 
 
 

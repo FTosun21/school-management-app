@@ -59,4 +59,17 @@ public class UserServiceImplementation implements UserService {
         userRepository.save(user);
     }
 
+    @Override
+    public void delete(Long id) {
+        User userInDB = userRepository.findById(id).orElseThrow(() -> new NoSuchElementException("User Role could not be found."));
+        //Todo karşılık gelen address de silinmeli
+
+        userInDB.setUserName(userInDB.getUserName() + " " + userInDB.getId());
+
+        userInDB.setDeleted(true);
+
+        userRepository.save(userInDB);
+
+    }
+
 }
