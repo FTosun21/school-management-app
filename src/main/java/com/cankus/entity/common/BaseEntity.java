@@ -1,18 +1,10 @@
 package com.cankus.entity.common;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
-@Setter
+
 @MappedSuperclass
 public abstract class BaseEntity {
     @Id
@@ -43,5 +35,65 @@ public abstract class BaseEntity {
     private void onPreUpdate() {
         this.lastUpdateDateTime = LocalDateTime.now();
         this.lastUpdateUserId = 1L;
+    }
+
+    public BaseEntity() {
+    }
+
+    public BaseEntity(Long id, Boolean isDeleted, LocalDateTime insertDateTime, Long insertUserId, LocalDateTime lastUpdateDateTime, Long lastUpdateUserId) {
+        this.id = id;
+        this.isDeleted = isDeleted;
+        this.insertDateTime = insertDateTime;
+        this.insertUserId = insertUserId;
+        this.lastUpdateDateTime = lastUpdateDateTime;
+        this.lastUpdateUserId = lastUpdateUserId;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Boolean getDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        isDeleted = deleted;
+    }
+
+    public LocalDateTime getInsertDateTime() {
+        return insertDateTime;
+    }
+
+    public void setInsertDateTime(LocalDateTime insertDateTime) {
+        this.insertDateTime = insertDateTime;
+    }
+
+    public Long getInsertUserId() {
+        return insertUserId;
+    }
+
+    public void setInsertUserId(Long insertUserId) {
+        this.insertUserId = insertUserId;
+    }
+
+    public LocalDateTime getLastUpdateDateTime() {
+        return lastUpdateDateTime;
+    }
+
+    public void setLastUpdateDateTime(LocalDateTime lastUpdateDateTime) {
+        this.lastUpdateDateTime = lastUpdateDateTime;
+    }
+
+    public Long getLastUpdateUserId() {
+        return lastUpdateUserId;
+    }
+
+    public void setLastUpdateUserId(Long lastUpdateUserId) {
+        this.lastUpdateUserId = lastUpdateUserId;
     }
 }

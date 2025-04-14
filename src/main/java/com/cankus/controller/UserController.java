@@ -56,6 +56,37 @@ public class UserController {
         userService.save(user);
         return "redirect:/user/create";
     }
+
+    @GetMapping("/update/{id}")
+    public String getUpdatePage(@PathVariable(name = "id") Long userId, Model model) {
+        model.addAttribute("user", userService.findById(userId));
+        model.addAttribute("roles", roleService.findAll());
+        model.addAttribute("states", State.values());
+        return "user/user-update";
+    }
+
+    @PostMapping("/update/{id}")
+    public String updateUser(@Valid @ModelAttribute("user") UserDto user,
+                             BindingResult bindingResult,
+                             RedirectAttributes redirectAttributes,
+                             Model model) {
+        //Todo role kısmı user story e göre düzenlenecek
+
+        // password ve confirmPassword match olmalı
+        if (userService.isPasswordMatched(user.getPassword(), user.getConfirmPassword())) {
+            bindingResult.rejectValue("confirmPassword", " ", "Password should match.");
+        }
+        // hata alınca formun yenilenmesi gerek
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("roles", roleService.findAll());
+            model.addAttribute("states", State.values());
+            return "user/user-update"; // formu aç
+        }
+        userService.update(user);
+        return "redirect:/user/create";
+    }
+
+
 }
     /*
         1- UserService içerisinde method oluştur

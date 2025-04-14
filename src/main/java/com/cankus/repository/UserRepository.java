@@ -6,16 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UserRepository extends JpaRepository<User,Long> {
-    // JpaRepository, CRUD işlemleri için gerekli temel metotları içerir.
-    // Özel sorgular burada tanımlanabilir.
-
-    // Örneğin, kullanıcı adı ile arama yapalım:
-    //User findByUserName(String userName);
-
-    // Kullanıcı adına göre arama (username benzersiz olduğu için Optional döner)
-    //  Optional<User> findByUserName(String userName);
-
-
 }
 
 

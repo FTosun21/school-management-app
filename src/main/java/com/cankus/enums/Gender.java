@@ -1,8 +1,6 @@
 package com.cankus.enums;
 
-import lombok.Getter;
 
-@Getter
 public enum Gender {
     MALE("Male"),
     FEMALE("Female");
@@ -13,5 +11,7 @@ public enum Gender {
         this.value = value;
     }
 
-
+    public String getValue() {
+        return value;
+    }
 }

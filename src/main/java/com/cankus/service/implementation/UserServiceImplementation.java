@@ -8,6 +8,7 @@ import com.cankus.service.UserService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Service
@@ -45,58 +46,17 @@ public class UserServiceImplementation implements UserService {
         userRepository.save(user);
 
     }
-    //lambda expression method refrains  çalış
 
+    @Override
+    public UserDto findById(Long id) {
+        User userInDB = userRepository.findById(id).orElseThrow(() -> new NoSuchElementException("User Role could not be found."));
+        return userMapper.covertToDto(userInDB);
+    }
+
+    @Override
+    public void update(UserDto userDto) {
+        User user = userMapper.covertToEntity(userDto);
+        userRepository.save(user);
+    }
 
 }
-/*
-//
-//    @Override
-//    public List<UserDto> getAllUsers() {
-//        return userRepository.findAll().stream()
-//                .filter(user -> !Boolean.TRUE.equals(user.getIsDeleted())) // Soft delete filtrelemesi
-//                .map(userMapper::convertToDto)
-//                .collect(Collectors.toList());
-//    }
-//
-//    @Override
-//    public UserDto createUser(UserDto userDto) {
-//        // Parola kontrolü
-//        if (!userDto.getPassword().equals(userDto.getConfirmPassword())) {
-//            throw new IllegalArgumentException("Password and Confirm Password do not match.");
-//        }
-//
-//        User user = userMapper.convertToEntity(userDto);
-//        User savedUser = userRepository.save(user);
-//        return userMapper.convertToDto(savedUser);
-//    }
-//
-//    @Override
-//    public UserDto getUserById(Long id) {
-//        User user = userRepository.findById(id)
-//                .orElseThrow(() -> new RuntimeException("User not found with id: " + id));
-//        return userMapper.convertToDto(user);
-//    }
-//
-//    @Override
-//    public UserDto updateUser(Long id, UserDto userDto) {
-//        User existing = userRepository.findById(id)
-//                .orElseThrow(() -> new RuntimeException("User not found with id: " + id));
-//
-//        User updatedUser = userMapper.convertToEntity(userDto);
-//        updatedUser.setId(id); // Mevcut id'yi koru
-//        updatedUser.setInsertDateTime(existing.getInsertDateTime());
-//        updatedUser.setInsertUserId(existing.getInsertUserId());
-//
-//        User saved = userRepository.save(updatedUser);
-//        return userMapper.convertToDto(saved);
-//    }
-//
-//    @Override
-//    public void deleteUser(Long id) {
-//        User user = userRepository.findById(id)
-//                .orElseThrow(() -> new RuntimeException("User not found with id: " + id));
-//        user.setIsDeleted(true); // Soft delete
-//        userRepository.save(user);
-//    }
- */
