@@ -26,13 +26,13 @@ public class RoleServiceImplementation implements RoleService {
     @Override
     public List<RoleDto> findAll() {
         return roleRepository.findAll().stream()
-                .map(roleMapper::covertToDto).collect(Collectors.toList());
+                .map(roleMapper::convertToDto).collect(Collectors.toList());
     }
 
     @Override
     public RoleDto findById(Long id) {
-        Role roleInDB = roleRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Role could not be found"));
-        return roleMapper.covertToDto(roleInDB);
+        Role roleInDB = roleRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Role could not be found."));
+        return roleMapper.convertToDto(roleInDB);
     }
 
 
