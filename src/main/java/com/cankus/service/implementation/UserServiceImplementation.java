@@ -1,8 +1,10 @@
 package com.cankus.service.implementation;
 
 import com.cankus.dto.UserDto;
+import com.cankus.entity.Address;
 import com.cankus.entity.User;
 import com.cankus.mapper.UserMapper;
+import com.cankus.repository.AddressRepository;
 import com.cankus.repository.UserRepository;
 import com.cankus.service.UserService;
 import org.springframework.stereotype.Service;
@@ -17,10 +19,12 @@ public class UserServiceImplementation implements UserService {
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;
+    private final AddressRepository addressRepository;
 
-    public UserServiceImplementation(UserRepository userRepository, UserMapper userMapper) {
+    public UserServiceImplementation(UserRepository userRepository, UserMapper userMapper, AddressRepository addressRepository) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
+        this.addressRepository = addressRepository;
     }
 
     @Override
@@ -63,11 +67,14 @@ public class UserServiceImplementation implements UserService {
     public void delete(Long id) {
         User userInDB = userRepository.findById(id).orElseThrow(() -> new NoSuchElementException("User Role could not be found."));
         //Todo karşılık gelen address de silinmeli
+        Address address=userInDB.getAddress();
+        if(address!=null){
+            address.setDeleted(true);
+            addressRepository.save(address);
+        }
 
         userInDB.setUserName(userInDB.getUserName() + " " + userInDB.getId());
-
         userInDB.setDeleted(true);
-
         userRepository.save(userInDB);
 
     }

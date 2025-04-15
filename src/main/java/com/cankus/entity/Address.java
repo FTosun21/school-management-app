@@ -3,9 +3,11 @@ package com.cankus.entity;
 import com.cankus.entity.common.BaseEntity;
 import com.cankus.enums.State;
 import jakarta.persistence.*;
+import org.hibernate.annotations.SQLRestriction;
 
 import java.time.LocalDateTime;
 
+@SQLRestriction("is_deleted is false")
 @Entity
 @Table(name = "addresses")
 public class Address extends BaseEntity {
