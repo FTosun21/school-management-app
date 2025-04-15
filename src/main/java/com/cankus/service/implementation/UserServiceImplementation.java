@@ -4,6 +4,7 @@ import com.cankus.dto.UserDto;
 import com.cankus.entity.User;
 import com.cankus.mapper.UserMapper;
 import com.cankus.repository.UserRepository;
+import com.cankus.service.AddressService;
 import com.cankus.service.UserService;
 import org.springframework.stereotype.Service;
 
@@ -17,10 +18,12 @@ public class UserServiceImplementation implements UserService {
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;
+    private final AddressService addressService;
 
-    public UserServiceImplementation(UserRepository userRepository, UserMapper userMapper) {
+    public UserServiceImplementation(UserRepository userRepository, UserMapper userMapper , AddressService addressService) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
+        this.addressService = addressService;
     }
 
     @Override
@@ -49,7 +52,7 @@ public class UserServiceImplementation implements UserService {
 
     @Override
     public UserDto findById(Long id) {
-        User userInDB = userRepository.findById(id).orElseThrow(() -> new NoSuchElementException("User Role could not be found."));
+        User userInDB = userRepository.findById(id).orElseThrow(() -> new NoSuchElementException("User could not be found."));
         return userMapper.covertToDto(userInDB);
     }
 
@@ -61,13 +64,10 @@ public class UserServiceImplementation implements UserService {
 
     @Override
     public void delete(Long id) {
-        User userInDB = userRepository.findById(id).orElseThrow(() -> new NoSuchElementException("User Role could not be found."));
-        //Todo karşılık gelen address de silinmeli
-
+        User userInDB = userRepository.findById(id).orElseThrow(() -> new NoSuchElementException("User could not be found."));
+        addressService.delete(id); //  soft delete yapıldı --> AddressRepositorydeki delete method
         userInDB.setUserName(userInDB.getUserName() + " " + userInDB.getId());
-
         userInDB.setDeleted(true);
-
         userRepository.save(userInDB);
 
     }

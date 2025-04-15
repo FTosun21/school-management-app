@@ -40,7 +40,7 @@ public class User extends BaseEntity {
 
     // Kullanıcının adresi
     @OneToOne(cascade = CascadeType.ALL)
-    //@JoinColumn(name = "address_id")
+    @JoinColumn(name = "address_id")
     private Address address;
 
 
