@@ -44,15 +44,15 @@ VALUES ('2022-01-05 00:00:00', 1, false, '2022-01-05 00:00:00', 1, 'Admin'),
          '$2a$10$hrw07xoqPTqHTND0g.L44Oq22jNquPKDbpF6uftd98z6eSeolISZi',
          '$2a$10$hrw07xoqPTqHTND0g.L44Oq22jNquPKDbpF6uftd98z6eSeolISZi', 3, 'MALE', 5, true);
 
--- INSERT INTO courses(insert_date_time, insert_user_id, is_deleted, last_update_date_time, last_update_user_id,
---                     name, description, course_manager_id, start_date, end_date)
--- VALUES ('2022-01-05 00:00:00', 1, false, '2022-01-05 00:00:00', 1, 'Spring Boot', 'Spring Boot with MVC, ORM, REST', 2,
---         '2024-01-10', '2024-01-10'),
---        ('2022-01-05 00:00:00', 1, false, '2022-01-05 00:00:00', 1, 'Java Advanced',
---         'Functional Programming, Streams, New Features', 2, '2024-01-10', '2024-01-10'),
---        ('2022-01-05 00:00:00', 1, false, '2022-01-05 00:00:00', 1, 'React Development', 'Create web app with React', 2,
---         '2024-01-10', '2024-01-10');
---
+ INSERT INTO courses(insert_date_time, insert_user_id, is_deleted, last_update_date_time, last_update_user_id,
+                     name, description, course_manager_id, start_date, end_date)
+ VALUES ('2022-01-05 00:00:00', 1, false, '2022-01-05 00:00:00', 1, 'Spring Boot', 'Spring Boot with MVC, ORM, REST', 2,
+         '2024-01-10', '2024-01-10'),
+        ('2022-01-05 00:00:00', 1, false, '2022-01-05 00:00:00', 1, 'Java Advanced',
+         'Functional Programming, Streams, New Features', 2, '2024-01-10', '2024-01-10'),
+        ('2022-01-05 00:00:00', 1, false, '2022-01-05 00:00:00', 1, 'React Development', 'Create web app with React', 2,
+         '2024-01-10', '2024-01-10');
+
 -- INSERT INTO lessons(insert_date_time, insert_user_id, is_deleted, last_update_date_time, last_update_user_id,
 --                     name, description, course_id, instructor_id)
 -- VALUES ('2022-01-05 00:00:00', 1, false, '2022-01-05 00:00:00', 1, 'Dependency Injection',
