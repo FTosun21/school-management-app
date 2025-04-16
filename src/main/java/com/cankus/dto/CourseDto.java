@@ -2,21 +2,32 @@ package com.cankus.dto;
 
 import com.cankus.entity.User;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.*;
 
 import java.time.LocalDate;
 
 public class CourseDto {
 
     private Long id;
+    @NotBlank(message = "Course name is a required field.")
+    @Size(max = 40,min = 2,message = "Course Name must be between 2 and 40 characters long.")
+    @Pattern(regexp = "^[A-Za-z]\\w*(?:\\s[A-Za-z]\\w*)*$", message = "Just use alphabetic characters with spaces.")
     private String name;
+    @NotBlank(message = "Course Description is a required field.")
+    @Size(max = 100,min = 5,message = "Course Description must be between 5 and 100 characters long.")
     private String description;
-    private User courseManager;
+    @NotBlank(message = "Please select a course manager!")
+    private UserDto courseManager;
+    @NotBlank(message = "Please select a start date!")
+    @FutureOrPresent(message = "Start date must be today or in the future")
     private LocalDate startDate;
+    @NotBlank(message = "Please select an end date!")
+    @Future(message = "End date must be in the future")
     private LocalDate endDate;
 
     public CourseDto() {
     }
-    public CourseDto(Long id, String name, String description, User courseManager, LocalDate startDate, LocalDate endDate) {
+    public CourseDto(Long id, String name, String description, UserDto courseManager, LocalDate startDate, LocalDate endDate) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -49,11 +60,11 @@ public class CourseDto {
         this.description = description;
     }
 
-    public User getCourseManager() {
+    public UserDto getCourseManager() {
         return courseManager;
     }
 
-    public void setCourseManager(User courseManager) {
+    public void setCourseManager(UserDto courseManager) {
         this.courseManager = courseManager;
     }
 
