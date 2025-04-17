@@ -16,12 +16,12 @@ public class CourseDto {
     @NotBlank(message = "Course Description is a required field.")
     @Size(max = 100,min = 5,message = "Course Description must be between 5 and 100 characters long.")
     private String description;
-    @NotBlank(message = "Please select a course manager!")
+    @NotNull(message = "Please select a course manager!")
     private UserDto courseManager;
-    @NotBlank(message = "Please select a start date!")
+    @NotNull(message = "Please select a start date!")
     @FutureOrPresent(message = "Start date must be today or in the future")
     private LocalDate startDate;
-    @NotBlank(message = "Please select an end date!")
+    @NotNull(message = "Please select an end date!")
     @Future(message = "End date must be in the future")
     private LocalDate endDate;
 
