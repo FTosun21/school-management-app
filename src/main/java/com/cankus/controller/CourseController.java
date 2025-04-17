@@ -43,7 +43,7 @@ public class CourseController {
             model.addAttribute("managers",userService.getAllManagers());
             return "course/course-create";
         }
-        //Todo --> US6 While new course is created, newly created course should assign to all students with isEnrolled false.
+        //Todo --> US6 AC.--> While new course is created, newly created course should assign to all students with isEnrolled false.
 
         courseService.save(course);
         return  "redirect:/course/create";

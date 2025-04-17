@@ -70,7 +70,7 @@ public class UserController {
                              BindingResult bindingResult,
                              RedirectAttributes redirectAttributes,
                              Model model) {
-        //Todo role kısmı user story e göre düzenlenecek
+        //Todo US3-AC.role:  Restrict condition update for roles: ADMIN, MANAGER, INSTRUCTOR
 
         // password ve confirmPassword match olmalı
         if (userService.isPasswordMatched(user.getPassword(), user.getConfirmPassword())) {
@@ -88,7 +88,8 @@ public class UserController {
 
     @GetMapping("/delete/{id}")
     public String deleteUser(@PathVariable Long id,RedirectAttributes redirectAttributes){
-        //Todo role kısmı user story e göre düzenlenecek
+
+        //Todo  US4-AC.In some cases not allowed to delete users:  Restrict condition delete for roles: ADMIN, MANAGER, INSTRUCTOR
 
 
         userService.delete(id);
