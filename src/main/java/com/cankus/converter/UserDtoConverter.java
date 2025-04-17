@@ -5,17 +5,17 @@ import com.cankus.service.UserService;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
+@Component
+public class UserDtoConverter implements Converter<String,UserDto> {
 
-public class UserDtoConverter  {
+    private final UserService userService;
 
-//    private final UserService userService;
-//
-//    public UserDtoConverter(UserService userService) {
-//        this.userService = userService;
-//    }
-//
-//    @Override
-//    public UserDto convert(String source) {
-//        return new UserDto() ;
-//    }
+    public UserDtoConverter(UserService userService) {
+        this.userService = userService;
+    }
+
+    @Override
+    public UserDto convert(String source) {
+        return userService.findById(Long.parseLong(source)) ;
+    }
 }
