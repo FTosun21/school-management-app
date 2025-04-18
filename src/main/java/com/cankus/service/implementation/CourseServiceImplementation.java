@@ -8,6 +8,7 @@ import com.cankus.service.CourseService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Service
@@ -30,6 +31,19 @@ public class CourseServiceImplementation implements CourseService {
     @Override
     public void save(CourseDto courseDto) {
         Course course=courseMapper.convertToEntity(courseDto);
+        courseRepository.save(course);
+    }
+
+    @Override
+    public CourseDto findById(Long id) {
+        Course courseInDB = courseRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("Course could not be found."));
+        return courseMapper.convertToDto(courseInDB);
+    }
+
+    @Override
+    public void update(CourseDto courseDto) {
+        Course course = courseMapper.convertToEntity(courseDto);
         courseRepository.save(course);
     }
 }
