@@ -46,4 +46,14 @@ public class CourseServiceImplementation implements CourseService {
         Course course = courseMapper.convertToEntity(courseDto);
         courseRepository.save(course);
     }
+
+    @Override
+    public void delete(Long id) {
+        Course courseInDB = courseRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("Course could not be found."));
+
+        courseInDB.setDeleted(true);
+        courseRepository.save(courseInDB);
+
+    }
 }

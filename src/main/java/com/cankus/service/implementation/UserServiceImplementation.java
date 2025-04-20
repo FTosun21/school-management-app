@@ -28,13 +28,16 @@ public class UserServiceImplementation implements UserService {
 
     @Override
     public List<UserDto> findAll() {
-        return userRepository.findAll().stream()
+        return userRepository.findAll()
+                .stream()
                 .map(userMapper::covertToDto).collect(Collectors.toList());
     }
 
     @Override
     public boolean isEmailRegistered(String email) {
-        return userRepository.findAll().stream().anyMatch(user -> user.getUserName().equals(email));
+        return userRepository.findAll()
+                .stream()
+                .anyMatch(user -> user.getUserName().equals(email));
     }
 
     @Override
@@ -52,7 +55,8 @@ public class UserServiceImplementation implements UserService {
 
     @Override
     public UserDto findById(Long id) {
-        User userInDB = userRepository.findById(id).orElseThrow(() -> new NoSuchElementException("User could not be found."));
+        User userInDB = userRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("User could not be found."));
         return userMapper.covertToDto(userInDB);
     }
 
@@ -64,7 +68,8 @@ public class UserServiceImplementation implements UserService {
 
     @Override
     public void delete(Long id) {
-        User userInDB = userRepository.findById(id).orElseThrow(() -> new NoSuchElementException("User could not be found."));
+        User userInDB = userRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("User could not be found."));
         addressService.delete(id); //  soft delete yapıldı --> AddressRepositorydeki delete method
         userInDB.setUserName(userInDB.getUserName() + " " + userInDB.getId());
         userInDB.setDeleted(true);
