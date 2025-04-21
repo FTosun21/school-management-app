@@ -8,4 +8,8 @@ public interface CourseService {
     List<CourseDto> findAll();
 
     void save(CourseDto courseDto);
+
+    CourseDto findById(Long id);
+
+    void update(CourseDto courseDto);
 }

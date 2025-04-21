@@ -7,10 +7,7 @@ import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("course")
@@ -48,4 +45,26 @@ public class CourseController {
         courseService.save(course);
         return  "redirect:/course/create";
     }
+
+    @GetMapping("/update/{id}")
+    public String getUpdatePage(@PathVariable(name = "id") Long courseId,Model model){
+        model.addAttribute("course",courseService.findById(courseId));
+        model.addAttribute("managers",userService.getAllManagers());
+        return "course/course-update";
+    }
+
+    @PostMapping("/update/{id}")
+    public String updateCourse(@Valid @ModelAttribute("course") CourseDto course,
+                               BindingResult bindingResult,
+                               //RedirectAttributes redirectAttributes,
+                               Model model){
+        if(bindingResult.hasErrors()){
+            model.addAttribute("managers",userService.getAllManagers());
+            return "course/course-update";
+        }
+
+        courseService.update(course);
+        return "redirect:/course/create";
+    }
+
 }
