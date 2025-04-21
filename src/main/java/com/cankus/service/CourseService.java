@@ -12,4 +12,6 @@ public interface CourseService {
     CourseDto findById(Long id);
 
     void update(CourseDto courseDto);
+
+    void delete(Long id);
 }

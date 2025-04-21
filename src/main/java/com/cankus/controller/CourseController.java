@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("course")
@@ -64,6 +65,17 @@ public class CourseController {
         }
 
         courseService.update(course);
+        return "redirect:/course/create";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String deleteCourse(@PathVariable Long id, RedirectAttributes redirectAttributes){
+        /** TODO US8: Before deleting a course, check if it has lessons.
+                If lessons exist, do not delete and show message: "This Course has either one or more than one lessons. Not allowed to delete".
+                If no lessons, first remove course from all students (courseStudent), then soft-delete course.
+                On successful delete, show message: "This Course is successfully deleted".
+         */
+        courseService.delete(id);
         return "redirect:/course/create";
     }
 
