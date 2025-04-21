@@ -5,6 +5,7 @@ import com.cankus.dto.CourseDto;
 import java.util.List;
 
 public interface CourseService {
+
     List<CourseDto> findAll();
 
     void save(CourseDto courseDto);

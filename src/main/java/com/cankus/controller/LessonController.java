@@ -26,7 +26,7 @@ public class LessonController {
     public String getCreatePage(Model model){
         model.addAttribute("lesson",new LessonDto());
         model.addAttribute("lessons",lessonService.findAll());
-        //model.addAttribute("courses",courseService.);
+        model.addAttribute("courses",courseService.findAll());
         model.addAttribute("instructors",userService.getAllInstructors());
         return "lesson/lesson-create";
     }
