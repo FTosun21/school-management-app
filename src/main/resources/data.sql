@@ -53,20 +53,20 @@ VALUES ('2022-01-05 00:00:00', 1, false, '2022-01-05 00:00:00', 1, 'Admin'),
         ('2022-01-05 00:00:00', 1, false, '2022-01-05 00:00:00', 1, 'React Development', 'Create web app with React', 2,
          '2024-01-10', '2024-01-10');
 
--- INSERT INTO lessons(insert_date_time, insert_user_id, is_deleted, last_update_date_time, last_update_user_id,
---                     name, description, course_id, instructor_id)
--- VALUES ('2022-01-05 00:00:00', 1, false, '2022-01-05 00:00:00', 1, 'Dependency Injection',
---         'In this lesson, you will learn the details of Injection', 1, 3),
---        ('2022-01-05 00:00:00', 1, false, '2022-01-05 00:00:00', 1, 'Bean Annotation and Component',
---         'This lesson for how to create Bean', 1, 3),
---        ('2022-01-05 00:00:00', 1, false, '2022-01-05 00:00:00', 1, 'Lambda Expression',
---         'How to use functional interfaces', 2, 4),
---        ('2022-01-05 00:00:00', 1, false, '2022-01-05 00:00:00', 1, 'Streams',
---         'You will learn common methods of Stream interface', 2, 4),
---        ('2022-01-05 00:00:00', 1, false, '2022-01-05 00:00:00', 1, 'How to create API', 'Basics of API creation', 3, 5),
---        ('2022-01-05 00:00:00', 1, false, '2022-01-05 00:00:00', 1, 'Single Page Application',
---         'Introduction to front-end development', 3, 5);
---
+ INSERT INTO lessons(insert_date_time, insert_user_id, is_deleted, last_update_date_time, last_update_user_id,
+                     name, description, course_id, instructor_id)
+ VALUES ('2022-01-05 00:00:00', 1, false, '2022-01-05 00:00:00', 1, 'Dependency Injection',
+         'In this lesson, you will learn the details of Injection', 1, 3),
+        ('2022-01-05 00:00:00', 1, false, '2022-01-05 00:00:00', 1, 'Bean Annotation and Component',
+         'This lesson for how to create Bean', 1, 3),
+        ('2022-01-05 00:00:00', 1, false, '2022-01-05 00:00:00', 1, 'Lambda Expression',
+         'How to use functional interfaces', 2, 4),
+        ('2022-01-05 00:00:00', 1, false, '2022-01-05 00:00:00', 1, 'Streams',
+         'You will learn common methods of Stream interface', 2, 4),
+        ('2022-01-05 00:00:00', 1, false, '2022-01-05 00:00:00', 1, 'How to create API', 'Basics of API creation', 3, 5),
+        ('2022-01-05 00:00:00', 1, false, '2022-01-05 00:00:00', 1, 'Single Page Application',
+         'Introduction to front-end development', 3, 5);
+
 -- INSERT INTO students(insert_date_time, insert_user_id, is_deleted, last_update_date_time, last_update_user_id,
 --                      first_name, last_name, email, gender, address_id)
 -- VALUES ('2022-01-05 00:00:00', 1, false, '2022-01-05 00:00:00', 1, 'Igor', 'Kotlin', 'igor@yahoo.com', 'MALE',
