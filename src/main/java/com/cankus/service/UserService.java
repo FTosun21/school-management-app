@@ -23,6 +23,8 @@ public interface UserService {
 
     List<UserDto> getAllManagers();
 
+    List<UserDto> getAllInstructors();
+
 
 
 }

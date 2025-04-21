@@ -27,7 +27,7 @@ public class LessonController {
         model.addAttribute("lesson",new LessonDto());
         model.addAttribute("lessons",lessonService.findAll());
         //model.addAttribute("courses",courseService.);
-       // model.addAttribute("instructors",userService.)
+        model.addAttribute("instructors",userService.getAllInstructors());
         return "lesson/lesson-create";
     }
 }
