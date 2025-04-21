@@ -1,6 +1,7 @@
 package com.cankus.service.implementation;
 
 import com.cankus.dto.CourseDto;
+import com.cankus.entity.Course;
 import com.cankus.mapper.CourseMapper;
 import com.cankus.repository.CourseRepository;
 import com.cankus.service.CourseService;
@@ -24,5 +25,11 @@ public class CourseServiceImplementation implements CourseService {
     public List<CourseDto> findAll() {
         return courseRepository.findAll().stream()
                 .map(courseMapper::convertToDto).collect(Collectors.toList());
+    }
+
+    @Override
+    public void save(CourseDto courseDto) {
+        Course course=courseMapper.convertToEntity(courseDto);
+        courseRepository.save(course);
     }
 }
