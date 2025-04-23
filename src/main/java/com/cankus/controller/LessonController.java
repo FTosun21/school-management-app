@@ -4,9 +4,13 @@ import com.cankus.dto.LessonDto;
 import com.cankus.service.CourseService;
 import com.cankus.service.LessonService;
 import com.cankus.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -29,5 +33,20 @@ public class LessonController {
         model.addAttribute("courses",courseService.findAll());
         model.addAttribute("instructors",userService.getAllInstructors());
         return "lesson/lesson-create";
+    }
+
+    @PostMapping("/create")
+    public String createLesson(@Valid @ModelAttribute("lesson") LessonDto lesson,
+                               BindingResult bindingResult,
+                               Model model){
+        if(bindingResult.hasErrors()){
+            model.addAttribute("lessons",lessonService.findAll());
+            model.addAttribute("courses",courseService.findAll());
+            model.addAttribute("instructors",userService.getAllInstructors());
+            return "lesson/lesson-create";
+        }
+        lessonService.save(lesson);
+        return "redirect:/lesson/create";
+
     }
 }
