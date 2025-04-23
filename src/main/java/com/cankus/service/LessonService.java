@@ -11,4 +11,6 @@ public interface LessonService {
     void save(LessonDto lessonDto);
 
     LessonDto findById(Long id);
+
+    void update(LessonDto lessonDto);
 }

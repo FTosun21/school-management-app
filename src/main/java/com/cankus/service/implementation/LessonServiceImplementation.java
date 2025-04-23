@@ -43,4 +43,10 @@ public class LessonServiceImplementation implements LessonService {
                 .orElseThrow(() -> new NoSuchElementException("Lesson could not be found."));
         return lessonMapper.convertToDto(lessonInDB);
     }
+
+    @Override
+    public void update(LessonDto lessonDto) {
+        Lesson lesson = lessonMapper.convertToEntity(lessonDto);
+        lessonRepository.save(lesson);
+    }
 }

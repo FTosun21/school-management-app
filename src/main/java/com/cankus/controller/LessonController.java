@@ -59,4 +59,17 @@ public class LessonController {
         model.addAttribute("instructors", userService.getAllInstructors());
         return "lesson/lesson-update";
     }
+
+    @PostMapping("/update/{id}")
+    public String updateLesson(@Valid @ModelAttribute("lesson")LessonDto lesson,
+                               BindingResult bindingResult,
+                               Model model){
+        if(bindingResult.hasErrors()){
+            model.addAttribute("courses", courseService.findAll());
+            model.addAttribute("instructors", userService.getAllInstructors());
+            return "lesson/lesson-update";
+        }
+        lessonService.update(lesson);
+        return "redirect:/lesson/create";
+    }
 }
