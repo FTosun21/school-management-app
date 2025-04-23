@@ -2,13 +2,24 @@ package com.cankus.dto;
 
 import com.cankus.entity.Course;
 import com.cankus.entity.User;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
 public class LessonDto {
 
     private Long id;
+    @NotBlank(message = "First Name is a required field.")
+    @Size(max = 40, min = 2, message = "First Name must be between 2 and 15 characters long.")
+    @Pattern(regexp = "([A-Za-z]\\w*(?:\\s[A-Za-z]\\w*)*)\n", message = "First Name must starts with Uppercase character.")
     private String name;
+    @NotBlank(message = "First Name is a required field")
+    @Size(max = 100, min = 5, message = "First Name must be between 2 and 15 characters long.")
     private String description;
+    @NotNull(message = "Please select a Course.")
     private Course course;
+    @NotNull(message = "Please select an Instructor.")
     private User instructor;
 
     public LessonDto() {
