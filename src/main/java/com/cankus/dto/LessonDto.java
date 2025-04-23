@@ -12,7 +12,7 @@ public class LessonDto {
     private Long id;
     @NotBlank(message = "First Name is a required field.")
     @Size(max = 40, min = 2, message = "First Name must be between 2 and 15 characters long.")
-    @Pattern(regexp = "([A-Za-z]\\w*(?:\\s[A-Za-z]\\w*)*)\n", message = "First Name must starts with Uppercase character.")
+    @Pattern(regexp = "^[A-Za-z]\\w*(?:\\s[A-Za-z]\\w*)*$", message = "First Name must starts with Uppercase character.")
     private String name;
     @NotBlank(message = "First Name is a required field")
     @Size(max = 100, min = 5, message = "First Name must be between 2 and 15 characters long.")
