@@ -1,6 +1,7 @@
 package com.cankus.service.implementation;
 
 import com.cankus.dto.LessonDto;
+import com.cankus.entity.Lesson;
 import com.cankus.mapper.LessonMapper;
 import com.cankus.repository.LessonRepository;
 import com.cankus.service.LessonService;
@@ -27,5 +28,11 @@ public class LessonServiceImplementation implements LessonService {
                 .stream()
                 .map(lessonMapper::convertToDto)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public void save(LessonDto lessonDto) {
+        Lesson lesson=lessonMapper.convertToEntity(lessonDto);
+        lessonRepository.save(lesson);
     }
 }

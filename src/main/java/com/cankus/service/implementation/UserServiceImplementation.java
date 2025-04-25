@@ -85,4 +85,12 @@ public class UserServiceImplementation implements UserService {
                 .map(userMapper::covertToDto).collect(Collectors.toList());
     }
 
+    @Override
+    public List<UserDto> getAllInstructors() {
+        return userRepository.findAll()
+                .stream()
+                .filter(user -> user.getRole().getDescription().equals("Instructor"))
+                .map(userMapper::covertToDto).collect(Collectors.toList());
+    }
+
 }
