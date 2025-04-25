@@ -8,13 +8,10 @@ import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("lesson")
+@RequestMapping("/lesson")
 public class LessonController {
     private final LessonService lessonService;
     private final CourseService courseService;
@@ -27,22 +24,22 @@ public class LessonController {
     }
 
     @GetMapping("/create")
-    public String getCreatePage(Model model){
-        model.addAttribute("lesson",new LessonDto());
-        model.addAttribute("lessons",lessonService.findAll());
-        model.addAttribute("courses",courseService.findAll());
-        model.addAttribute("instructors",userService.getAllInstructors());
+    public String getCreatePage(Model model) {
+        model.addAttribute("lesson", new LessonDto());
+        model.addAttribute("lessons", lessonService.findAll());
+        model.addAttribute("courses", courseService.findAll());
+        model.addAttribute("instructors", userService.getAllInstructors());
         return "lesson/lesson-create";
     }
 
     @PostMapping("/create")
     public String createLesson(@Valid @ModelAttribute("lesson") LessonDto lesson,
                                BindingResult bindingResult,
-                               Model model){
-        if(bindingResult.hasErrors()){
-            model.addAttribute("lessons",lessonService.findAll());
-            model.addAttribute("courses",courseService.findAll());
-            model.addAttribute("instructors",userService.getAllInstructors());
+                               Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("lessons", lessonService.findAll());
+            model.addAttribute("courses", courseService.findAll());
+            model.addAttribute("instructors", userService.getAllInstructors());
             return "lesson/lesson-create";
         }
         /*
@@ -53,5 +50,26 @@ public class LessonController {
         lessonService.save(lesson);
         return "redirect:/lesson/create";
 
+    }
+
+    @GetMapping("/update/{id}")
+    public String getUpdatePage(@PathVariable Long id,Model model){
+        model.addAttribute("lesson", lessonService.findById(id));
+        model.addAttribute("courses", courseService.findAll());
+        model.addAttribute("instructors", userService.getAllInstructors());
+        return "lesson/lesson-update";
+    }
+
+    @PostMapping("/update/{id}")
+    public String updateLesson(@Valid @ModelAttribute("lesson")LessonDto lesson,
+                               BindingResult bindingResult,
+                               Model model){
+        if(bindingResult.hasErrors()){
+            model.addAttribute("courses", courseService.findAll());
+            model.addAttribute("instructors", userService.getAllInstructors());
+            return "lesson/lesson-update";
+        }
+        lessonService.update(lesson);
+        return "redirect:/lesson/create";
     }
 }

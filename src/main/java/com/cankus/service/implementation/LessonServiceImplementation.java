@@ -8,6 +8,7 @@ import com.cankus.service.LessonService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Service
@@ -33,6 +34,19 @@ public class LessonServiceImplementation implements LessonService {
     @Override
     public void save(LessonDto lessonDto) {
         Lesson lesson=lessonMapper.convertToEntity(lessonDto);
+        lessonRepository.save(lesson);
+    }
+
+    @Override
+    public LessonDto findById(Long id) {
+        Lesson lessonInDB = lessonRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("Lesson could not be found."));
+        return lessonMapper.convertToDto(lessonInDB);
+    }
+
+    @Override
+    public void update(LessonDto lessonDto) {
+        Lesson lesson = lessonMapper.convertToEntity(lessonDto);
         lessonRepository.save(lesson);
     }
 }
