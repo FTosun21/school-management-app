@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
-@RequestMapping("course")
+@RequestMapping("/course")
 public class CourseController {
     private final CourseService courseService;
     private final UserService userService;

@@ -1,7 +1,6 @@
 package com.cankus.entity;
 
 import com.cankus.entity.common.BaseEntity;
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
