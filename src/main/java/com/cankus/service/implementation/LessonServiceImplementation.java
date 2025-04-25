@@ -49,4 +49,12 @@ public class LessonServiceImplementation implements LessonService {
         Lesson lesson = lessonMapper.convertToEntity(lessonDto);
         lessonRepository.save(lesson);
     }
+
+    @Override
+    public void delete(Long id) {
+        Lesson lessonInDB = lessonRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("Lesson could not be found."));
+        lessonInDB.setDeleted(true);
+        lessonRepository.save(lessonInDB);
+    }
 }

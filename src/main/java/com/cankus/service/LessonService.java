@@ -13,4 +13,6 @@ public interface LessonService {
     LessonDto findById(Long id);
 
     void update(LessonDto lessonDto);
+
+    void delete(Long id);
 }
