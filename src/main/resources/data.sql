@@ -67,22 +67,22 @@ VALUES ('2022-01-05 00:00:00', 1, false, '2022-01-05 00:00:00', 1, 'Admin'),
         ('2022-01-05 00:00:00', 1, false, '2022-01-05 00:00:00', 1, 'Single Page Application',
          'Introduction to front-end development', 3, 5);
 
--- INSERT INTO students(insert_date_time, insert_user_id, is_deleted, last_update_date_time, last_update_user_id,
---                      first_name, last_name, email, gender, address_id)
--- VALUES ('2022-01-05 00:00:00', 1, false, '2022-01-05 00:00:00', 1, 'Igor', 'Kotlin', 'igor@yahoo.com', 'MALE',
---         6),
---        ('2022-01-05 00:00:00', 1, false, '2022-01-05 00:00:00', 1, 'Sue', 'Jayden', 'sue@gmail.com', 'FEMALE',
---         7),
---        ('2022-01-05 00:00:00', 1, false, '2022-01-05 00:00:00', 1, 'Tina', 'Davis', 'tina@gmail.com', 'FEMALE',
---         8),
---        ('2022-01-05 00:00:00', 1, false, '2022-01-05 00:00:00', 1, 'Jorge', 'News', 'news@gmail.com', 'MALE',
---         9);
---
--- VALUES ('2022-01-05 00:00:00', 1, false, '2022-01-05 00:00:00', 1, 3, 1),
---        ('2022-01-05 00:00:00', 1, false, '2022-01-05 00:00:00', 1, 4, 1),
---        ('2022-01-05 00:00:00', 1, false, '2022-01-05 00:00:00', 1, 3, 2),
---        ('2022-01-05 00:00:00', 1, false, '2022-01-05 00:00:00', 1, 4, 2);
---
+ INSERT INTO students(insert_date_time, insert_user_id, is_deleted, last_update_date_time, last_update_user_id,
+                      first_name, last_name, email, gender, address_id)
+ VALUES ('2022-01-05 00:00:00', 1, false, '2022-01-05 00:00:00', 1, 'Igor', 'Kotlin', 'igor@yahoo.com', 'MALE',
+         6),
+        ('2022-01-05 00:00:00', 1, false, '2022-01-05 00:00:00', 1, 'Sue', 'Jayden', 'sue@gmail.com', 'FEMALE',
+         7),
+        ('2022-01-05 00:00:00', 1, false, '2022-01-05 00:00:00', 1, 'Tina', 'Davis', 'tina@gmail.com', 'FEMALE',
+         8),
+        ('2022-01-05 00:00:00', 1, false, '2022-01-05 00:00:00', 1, 'Jorge', 'News', 'news@gmail.com', 'MALE',
+         9);
+
+ VALUES ('2022-01-05 00:00:00', 1, false, '2022-01-05 00:00:00', 1, 3, 1),
+        ('2022-01-05 00:00:00', 1, false, '2022-01-05 00:00:00', 1, 4, 1),
+        ('2022-01-05 00:00:00', 1, false, '2022-01-05 00:00:00', 1, 3, 2),
+        ('2022-01-05 00:00:00', 1, false, '2022-01-05 00:00:00', 1, 4, 2);
+
 -- INSERT INTO course_student(insert_date_time, insert_user_id, is_deleted, last_update_date_time, last_update_user_id,
 --                            course_id, student_id,
 --                            is_enrolled)
