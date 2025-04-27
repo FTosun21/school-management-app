@@ -33,6 +33,7 @@ public class StudentController {
     public String createStudent(@Valid @ModelAttribute("student")StudentDto student,
                                 BindingResult bindingResult,
                                 Model model){
+        //Todo While saving student, assign all available courses to this student with status false.
         if(bindingResult.hasErrors()){
             model.addAttribute("states",State.values());
             model.addAttribute("students",studentService.findAll());
