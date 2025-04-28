@@ -1,6 +1,7 @@
 package com.cankus.service.implementation;
 
 import com.cankus.dto.StudentDto;
+import com.cankus.entity.Student;
 import com.cankus.mapper.StudentMapper;
 import com.cankus.repository.StudentRepository;
 import com.cankus.service.StudentService;
@@ -23,5 +24,12 @@ public class StudentServiceImplementation implements StudentService {
         return studentRepository.findAll()
                 .stream()
                 .map(studentMapper::convertToDto).collect(Collectors.toList());
+    }
+
+    @Override
+    public void save(StudentDto studentDto) {
+        Student student = studentMapper.convertToEntity(studentDto);
+        studentRepository.save(student);
+
     }
 }
