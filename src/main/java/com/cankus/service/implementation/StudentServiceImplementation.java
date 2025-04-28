@@ -8,6 +8,7 @@ import com.cankus.service.StudentService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Service
@@ -31,5 +32,12 @@ public class StudentServiceImplementation implements StudentService {
         Student student = studentMapper.convertToEntity(studentDto);
         studentRepository.save(student);
 
+    }
+
+    @Override
+    public StudentDto findById(Long id) {
+        Student studentInDB = studentRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("Student could not be found."));
+        return studentMapper.convertToDto(studentInDB);
     }
 }
