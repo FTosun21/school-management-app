@@ -40,4 +40,10 @@ public class StudentServiceImplementation implements StudentService {
                 .orElseThrow(() -> new NoSuchElementException("Student could not be found."));
         return studentMapper.convertToDto(studentInDB);
     }
+
+    @Override
+    public void update(StudentDto studentDto) {
+        Student student = studentMapper.convertToEntity(studentDto);
+        studentRepository.save(student);
+    }
 }

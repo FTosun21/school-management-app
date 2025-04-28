@@ -47,4 +47,17 @@ public class StudentController {
         return "student/student-update";
     }
 
+    @PostMapping("update/{id}")
+    public String updateStudent(@Valid @ModelAttribute("student") StudentDto student,
+                                BindingResult bindingResult,
+                                Model model){
+        if(bindingResult.hasErrors()){
+            model.addAttribute("students",studentService.findAll());
+            model.addAttribute("states",State.values());
+            return "student/student-update";
+        }
+        studentService.update(student);
+        return "redirect:/student/create";
+    }
+
 }
