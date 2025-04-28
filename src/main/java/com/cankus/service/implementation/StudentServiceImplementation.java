@@ -4,6 +4,7 @@ import com.cankus.dto.StudentDto;
 import com.cankus.entity.Student;
 import com.cankus.mapper.StudentMapper;
 import com.cankus.repository.StudentRepository;
+import com.cankus.service.AddressService;
 import com.cankus.service.StudentService;
 import org.springframework.stereotype.Service;
 
@@ -15,10 +16,12 @@ import java.util.stream.Collectors;
 public class StudentServiceImplementation implements StudentService {
     private final StudentRepository studentRepository;
     private final StudentMapper studentMapper;
+    private final AddressService addressService;
 
-    public StudentServiceImplementation(StudentRepository studentRepository , StudentMapper studentMapper) {
+    public StudentServiceImplementation(StudentRepository studentRepository , StudentMapper studentMapper, AddressService addressService) {
         this.studentRepository = studentRepository;
         this.studentMapper = studentMapper;
+        this.addressService = addressService;
     }
 
     public List<StudentDto> findAll(){
@@ -45,5 +48,14 @@ public class StudentServiceImplementation implements StudentService {
     public void update(StudentDto studentDto) {
         Student student = studentMapper.convertToEntity(studentDto);
         studentRepository.save(student);
+    }
+    @Override
+    public void delete(Long id) {
+        Student studentInDB = studentRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("Student could not be found."));
+        addressService.delete(id);
+        studentInDB.setEmail(studentInDB.getEmail() + "-" + studentInDB.getId());
+        studentInDB.setDeleted(true);
+        studentRepository.save(studentInDB);
     }
 }
