@@ -9,4 +9,8 @@ public interface StudentService {
     List <StudentDto> findAll();
 
     void save(StudentDto studentDto);
+
+    StudentDto findById(Long id);
+
+    void update(StudentDto studentDto);
 }
