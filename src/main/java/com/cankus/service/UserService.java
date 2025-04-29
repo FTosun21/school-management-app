@@ -25,6 +25,11 @@ public interface UserService {
 
     List<UserDto> getAllInstructors();
 
+    boolean canUpdateRole(Long id);
+
+    boolean isSoleAdmin(Long id);
+
+
 
 
 }

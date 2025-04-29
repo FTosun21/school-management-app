@@ -70,7 +70,29 @@ public class UserController {
                              BindingResult bindingResult,
                              RedirectAttributes redirectAttributes,
                              Model model) {
-        //Todo US3-AC.role:  Restrict condition update for roles: ADMIN, MANAGER, INSTRUCTOR
+
+        if (!userService.canUpdateRole(user.getId())) {
+            String role = userService.findById(user.getId()).getRole().getDescription().toUpperCase();
+            String errorMessage;
+
+                switch (role) {
+                    case "ADMIN":
+                    errorMessage = "This admin is unique in the system. Not allowed to update.";
+                    break;
+                case "MANAGER":
+                    errorMessage = "This manager is responsible for one or more courses. Not allowed to update.";
+                    break;
+                case "INSTRUCTOR":
+                    errorMessage = "This instructor is responsible for one or more lessons. Not allowed to update.";
+                    break;
+                default:
+                    errorMessage = "Not allowed to update role.";
+            }
+
+            redirectAttributes.addFlashAttribute("error", errorMessage);
+            return "redirect:/user/update/" + user.getId();
+        }
+
 
         // password ve confirmPassword match olmalı
         if (userService.isPasswordMatched(user.getPassword(), user.getConfirmPassword())) {

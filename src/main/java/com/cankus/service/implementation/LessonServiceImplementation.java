@@ -57,4 +57,9 @@ public class LessonServiceImplementation implements LessonService {
         lessonInDB.setDeleted(true);
         lessonRepository.save(lessonInDB);
     }
+
+    @Override
+    public boolean hasAssignedLessons(Long instructorId) {
+        return lessonRepository.existsById(instructorId);
+    }
 }

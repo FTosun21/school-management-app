@@ -15,4 +15,7 @@ public interface LessonService {
     void update(LessonDto lessonDto);
 
     void delete(Long id);
+
+    boolean hasAssignedLessons(Long instructorId);
+
 }

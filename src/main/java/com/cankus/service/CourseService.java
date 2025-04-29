@@ -15,4 +15,7 @@ public interface CourseService {
     void update(CourseDto courseDto);
 
     void delete(Long id);
+
+    boolean hasAssignedCourses(Long managerId);
+
 }
