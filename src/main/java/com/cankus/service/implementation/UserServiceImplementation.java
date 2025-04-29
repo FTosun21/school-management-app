@@ -124,5 +124,23 @@ public class UserServiceImplementation implements UserService {
         return admins.size() == 1 && admins.get(0).getId().equals(id);
     }
 
+    @Override
+    public boolean canDeleteUser(Long id) {
+        UserDto user = findById(id);
+        String role = user.getRole().getDescription();
+
+        switch (role.toUpperCase()) {
+            case "ADMIN":
+                return !isSoleAdmin(id);
+            case "MANAGER":
+                return !courseService.hasAssignedCourses(id);
+            case "INSTRUCTOR":
+                return !lessonService.hasAssignedLessons(id);
+            default:
+                return true;
+        }
+    }
+
+
 
 }

@@ -111,7 +111,27 @@ public class UserController {
     @GetMapping("/delete/{id}")
     public String deleteUser(@PathVariable Long id,RedirectAttributes redirectAttributes){
 
-        //Todo  US4-AC.In some cases not allowed to delete users:  Restrict condition delete for roles: ADMIN, MANAGER, INSTRUCTOR
+        if (!userService.canDeleteUser(id)) {
+            String role = userService.findById(id).getRole().getDescription();
+            String errorMessage;
+
+            switch (role.toUpperCase()) {
+                case "ADMIN":
+                    errorMessage = "This admin is unique in the system. Not allowed to delete.";
+                    break;
+                case "MANAGER":
+                    errorMessage = "This manager is responsible for one or more courses. Not allowed to delete.";
+                    break;
+                case "INSTRUCTOR":
+                    errorMessage = "This instructor is responsible for one or more lessons. Not allowed to delete.";
+                    break;
+                default:
+                    errorMessage = "Not allowed to delete user.";
+            }
+
+            redirectAttributes.addFlashAttribute("error", errorMessage);
+            return "redirect:/user/create";
+        }
 
 
         userService.delete(id);
