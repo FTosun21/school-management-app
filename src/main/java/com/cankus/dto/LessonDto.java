@@ -18,14 +18,14 @@ public class LessonDto {
     @Size(max = 100, min = 5, message = "First Name must be between 2 and 15 characters long.")
     private String description;
     @NotNull(message = "Please select a Course.")
-    private Course course;
+    private CourseDto course;
     @NotNull(message = "Please select an Instructor.")
-    private User instructor;
+    private UserDto instructor;
 
     public LessonDto() {
     }
 
-    public LessonDto(Long id, String name, Course course, String description, User instructor) {
+    public LessonDto(Long id, String name, CourseDto course, String description, UserDto instructor) {
         this.id = id;
         this.name = name;
         this.course = course;
@@ -57,19 +57,19 @@ public class LessonDto {
         this.description = description;
     }
 
-    public Course getCourse() {
+    public CourseDto getCourse() {
         return course;
     }
 
-    public void setCourse(Course course) {
+    public void setCourse(CourseDto course) {
         this.course = course;
     }
 
-    public User getInstructor() {
+    public UserDto getInstructor() {
         return instructor;
     }
 
-    public void setInstructor(User instructor) {
+    public void setInstructor(UserDto instructor) {
         this.instructor = instructor;
     }
 }

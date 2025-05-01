@@ -30,12 +30,12 @@ public class StudentDto {
 
     @Valid
     @NotNull
-    private Address address;
+    private AddressDto address;
 
     public StudentDto() {
     }
 
-    public StudentDto(Long id, String firstName, String lastName, String email, Gender gender, Address address) {
+    public StudentDto(Long id, String firstName, String lastName, String email, Gender gender, AddressDto address) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -84,11 +84,11 @@ public class StudentDto {
         this.gender = gender;
     }
 
-    public Address getAddress() {
+    public AddressDto getAddress() {
         return address;
     }
 
-    public void setAddress(Address address) {
+    public void setAddress(AddressDto address) {
         this.address = address;
     }
 }

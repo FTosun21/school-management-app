@@ -5,6 +5,7 @@ import com.cankus.entity.Course;
 import com.cankus.mapper.CourseMapper;
 import com.cankus.repository.CourseRepository;
 import com.cankus.service.CourseService;
+import com.cankus.service.CourseStudentService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,10 +17,12 @@ public class CourseServiceImplementation implements CourseService {
 
     private final CourseRepository courseRepository;
     private final CourseMapper courseMapper;
+    private final CourseStudentService courseStudentService;
 
-    public CourseServiceImplementation(CourseRepository courseRepository, CourseMapper courseMapper) {
+    public CourseServiceImplementation(CourseRepository courseRepository, CourseMapper courseMapper, CourseStudentService courseStudentService) {
         this.courseRepository = courseRepository;
         this.courseMapper = courseMapper;
+        this.courseStudentService = courseStudentService;
     }
 
     @Override
@@ -30,8 +33,9 @@ public class CourseServiceImplementation implements CourseService {
 
     @Override
     public void save(CourseDto courseDto) {
-        Course course=courseMapper.convertToEntity(courseDto);
-        courseRepository.save(course);
+        Course course = courseMapper.convertToEntity(courseDto);
+        Course savedCourse = courseRepository.save(course);
+        courseStudentService.assingNewCourseToAllStudent(savedCourse.getId());
     }
 
     @Override
