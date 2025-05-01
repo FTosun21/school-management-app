@@ -60,6 +60,6 @@ public class LessonServiceImplementation implements LessonService {
 
     @Override
     public boolean hasAssignedLessons(Long instructorId) {
-        return lessonRepository.existsById(instructorId);
+        return lessonRepository.existsByInstructorId(instructorId);
     }
 }

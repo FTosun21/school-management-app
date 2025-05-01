@@ -59,6 +59,6 @@ public class CourseServiceImplementation implements CourseService {
 
     @Override
     public boolean hasAssignedCourses(Long managerId) {
-        return courseRepository.existsById(managerId);
+        return courseRepository.existsByCourseManagerId(managerId);
     }
 }

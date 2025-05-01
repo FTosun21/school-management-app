@@ -29,6 +29,8 @@ public interface UserService {
 
     boolean isSoleAdmin(Long id);
 
+    boolean canDeleteUser(Long id);
+
 
 
 
