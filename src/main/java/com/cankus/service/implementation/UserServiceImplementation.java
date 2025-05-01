@@ -5,6 +5,8 @@ import com.cankus.entity.User;
 import com.cankus.mapper.UserMapper;
 import com.cankus.repository.UserRepository;
 import com.cankus.service.AddressService;
+import com.cankus.service.CourseService;
+import com.cankus.service.LessonService;
 import com.cankus.service.UserService;
 import org.springframework.stereotype.Service;
 
@@ -19,11 +21,15 @@ public class UserServiceImplementation implements UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
     private final AddressService addressService;
+    private final CourseService courseService;
+    private final LessonService lessonService;
 
-    public UserServiceImplementation(UserRepository userRepository, UserMapper userMapper , AddressService addressService) {
+    public UserServiceImplementation(UserRepository userRepository, UserMapper userMapper, AddressService addressService, CourseService courseService, LessonService lessonService) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
         this.addressService = addressService;
+        this.courseService = courseService;
+        this.lessonService = lessonService;
     }
 
     @Override
@@ -92,5 +98,31 @@ public class UserServiceImplementation implements UserService {
                 .filter(user -> user.getRole().getDescription().equals("Instructor"))
                 .map(userMapper::covertToDto).collect(Collectors.toList());
     }
+
+    @Override
+    public boolean canUpdateRole(Long id) {
+        UserDto user = findById(id);
+        String roleDescription = user.getRole().getDescription().toUpperCase();
+        switch (roleDescription) {
+            case "ADMIN":
+               return !isSoleAdmin(id);
+            case "MANAGER":
+              return !courseService.hasAssignedCourses(id);
+            case "INSTRUCTOR":
+                return !lessonService.hasAssignedLessons(id);
+            default:
+                return true;
+        }
+    }
+
+    @Override
+    public boolean isSoleAdmin(Long id) {
+        List<UserDto> admins = findAll()
+                .stream()
+                .filter(user -> user.getRole().getDescription().equalsIgnoreCase("ADMIN"))
+                .collect(Collectors.toList());
+        return admins.size() == 1 && admins.get(0).getId().equals(id);
+    }
+
 
 }

@@ -56,4 +56,9 @@ public class CourseServiceImplementation implements CourseService {
         courseRepository.save(courseInDB);
 
     }
+
+    @Override
+    public boolean hasAssignedCourses(Long managerId) {
+        return courseRepository.existsById(managerId);
+    }
 }
