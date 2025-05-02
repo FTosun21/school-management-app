@@ -9,5 +9,7 @@ import java.util.List;
 public interface CourseStudentRepository extends JpaRepository<CourseStudent, Long> {
 
     List<CourseStudent> findByStudentIdAndCourseIsDeletedFalseAndStudentIsDeletedFalse(Long studentId);
+    // *us8-3     -> CSSImpl
+    List<CourseStudent> findAllByCourseId(Long id);
 
 }

@@ -18,4 +18,7 @@ public interface LessonService {
 
     boolean hasAssignedLessons(Long instructorId);
 
+    //us8-6 --LSImpl
+    List<LessonDto> getAllLessonsByCourseId(Long courseId);
+
 }

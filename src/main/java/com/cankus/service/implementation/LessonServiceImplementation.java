@@ -62,4 +62,14 @@ public class LessonServiceImplementation implements LessonService {
     public boolean hasAssignedLessons(Long instructorId) {
         return lessonRepository.existsByInstructorId(instructorId);
     }
+
+    // *us8-7 -->L_repository
+    @Override
+    public List<LessonDto> getAllLessonsByCourseId(Long courseId) {
+        //*us8-9  --> C_Service
+        return lessonRepository.findAllByCourseId(courseId)
+                .stream()
+                .map(lessonMapper::convertToDto)
+                .collect(Collectors.toList());
+    }
 }
