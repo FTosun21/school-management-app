@@ -2,25 +2,27 @@ package com.cankus.service.implementation;
 
 import com.cankus.entity.Course;
 import com.cankus.entity.CourseStudent;
-import com.cankus.mapper.CourseStudentMapper;
+import com.cankus.entity.Student;
 import com.cankus.repository.CourseRepository;
 import com.cankus.repository.CourseStudentRepository;
 import com.cankus.repository.StudentRepository;
 import com.cankus.service.CourseStudentService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 @Service
 public class CourseStudentServiceImplementation implements CourseStudentService {
 
     private final CourseStudentRepository courseStudentRepository;
-    private final CourseStudentMapper courseStudentMapper;
     private final CourseRepository courseRepository;
     private final StudentRepository studentRepository;
 
-    public CourseStudentServiceImplementation(CourseStudentRepository courseStudentRepository, CourseStudentMapper courseStudentMapper, CourseRepository courseRepository, StudentRepository studentRepository ) {
+    public CourseStudentServiceImplementation(CourseStudentRepository courseStudentRepository, CourseRepository courseRepository, StudentRepository studentRepository ) {
         this.courseStudentRepository = courseStudentRepository;
-        this.courseStudentMapper = courseStudentMapper;
         this.courseRepository = courseRepository;
         this.studentRepository = studentRepository;
     }
@@ -45,5 +47,30 @@ public class CourseStudentServiceImplementation implements CourseStudentService 
                     courseStudentInDB.setDeleted(true);
                     courseStudentRepository.save(courseStudentInDB);
                 });
+    }
+
+    @Transactional
+    @Override
+    public void assignAllCourseToNewStudent(Long studentId){
+        // 1. Öğrenciyi soft delete durumuna göre ara
+        Student student = studentRepository.findByIdAndIsDeletedFalse(studentId)
+        .orElseThrow(() -> new NoSuchElementException("Student could not be found by id: "+studentId));
+        // 2) Get all active courses
+        List<Course> activeCourses = courseRepository.findAllByIsDeletedFalse();
+
+        // 3) Her course için CourseStudent ilişkisini oluştur (isEnrolled = false)
+        List<CourseStudent> courseStudents = activeCourses.stream()
+                .filter(course -> !courseStudentRepository.existsByCourseIdAndStudentId(
+                        course.getId(), studentId)) // Çift atama önle
+                .map(course -> {
+                    CourseStudent cs = new CourseStudent();
+                    cs.setCourse(course);
+                    cs.setStudent(student);
+                    cs.setEnrolled(false);
+                    return cs;
+                })
+                .collect(Collectors.toList());
+        // 4. Toplu kaydet
+        courseStudentRepository.saveAll(courseStudents);
     }
 }
