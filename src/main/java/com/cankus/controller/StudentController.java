@@ -76,6 +76,13 @@ public class StudentController {
         return "student/student-courses";
     }
 
+    @GetMapping("/enroll/{courseStudentId}/{id}")
+    public String enrollCourse(@PathVariable Long courseStudentId,@PathVariable Long id){
+       courseStudentService.enroll(courseStudentId);
+        return "redirect:/student/assign/" + id; // Refresh assigned courses list
+
+    }
+
 
 
 }

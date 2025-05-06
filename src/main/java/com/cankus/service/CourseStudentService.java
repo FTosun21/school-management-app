@@ -14,4 +14,6 @@ public interface CourseStudentService {
 
     List<CourseStudentDto> findAllByStudentId(Long id);
 
+    void enroll(Long courseStudentId);
+
 }
