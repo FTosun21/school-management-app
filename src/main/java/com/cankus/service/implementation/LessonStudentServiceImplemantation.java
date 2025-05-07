@@ -9,6 +9,7 @@ import com.cankus.service.LessonStudentService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Service
@@ -35,6 +36,15 @@ public class LessonStudentServiceImplemantation implements LessonStudentService{
 
         // Save all lesson assignments in a batch operation for performance
         lessonStudentRepository.saveAll(lessonStudents);
+    }
+    @Override
+    public void removeLessonStudent(Long lessonId, Long studentId) {
+        lessonStudentRepository.findAllByLessonIdAndStudentId(lessonId, studentId)
+                .forEach(lessonStudent -> {
+                    LessonStudent lessonStudentInDb = lessonStudentRepository.findById(lessonStudent.getId()).orElseThrow(() -> new NoSuchElementException("LessonStudent could not be found"));
+                    lessonStudentInDb.setDeleted(true);
+                    lessonStudentRepository.save(lessonStudentInDb);
+                });
     }
 
 

@@ -83,6 +83,13 @@ public class StudentController {
 
     }
 
+    @GetMapping("/drop/{courseStudentId}/{id}")
+    public String dropCourse(@PathVariable Long courseStudentId,@PathVariable Long id){
+        courseStudentService.drop(courseStudentId);
+        return "redirect:/student/assign/" + id; // Refresh assigned courses list
+
+    }
+
 
 
 }
