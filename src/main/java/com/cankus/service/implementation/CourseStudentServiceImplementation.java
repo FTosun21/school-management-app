@@ -1,13 +1,9 @@
 package com.cankus.service.implementation;
 
 import com.cankus.dto.CourseStudentDto;
-import com.cankus.entity.Course;
-import com.cankus.entity.CourseStudent;
-import com.cankus.entity.Student;
+import com.cankus.entity.*;
 import com.cankus.mapper.CourseStudentMapper;
-import com.cankus.repository.CourseRepository;
-import com.cankus.repository.CourseStudentRepository;
-import com.cankus.repository.StudentRepository;
+import com.cankus.repository.*;
 import com.cankus.service.CourseStudentService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,12 +19,16 @@ public class CourseStudentServiceImplementation implements CourseStudentService 
     private final CourseRepository courseRepository;
     private final StudentRepository studentRepository;
     private final CourseStudentMapper courseStudentMapper;
+    private final LessonRepository lessonRepository;
+    private final LessonStudentRepository lessonStudentRepository;
 
-    public CourseStudentServiceImplementation(CourseStudentRepository courseStudentRepository, CourseRepository courseRepository, StudentRepository studentRepository, CourseStudentMapper courseStudentMapper) {
+    public CourseStudentServiceImplementation(CourseStudentRepository courseStudentRepository, CourseRepository courseRepository, StudentRepository studentRepository, CourseStudentMapper courseStudentMapper, LessonRepository lessonRepository, LessonStudentRepository lessonStudentRepository) {
         this.courseStudentRepository = courseStudentRepository;
         this.courseRepository = courseRepository;
         this.studentRepository = studentRepository;
         this.courseStudentMapper = courseStudentMapper;
+        this.lessonRepository = lessonRepository;
+        this.lessonStudentRepository = lessonStudentRepository;
     }
 
     @Override
@@ -83,5 +83,23 @@ public class CourseStudentServiceImplementation implements CourseStudentService 
         return courseStudentRepository.findByStudentIdAndCourseIsDeletedFalseAndStudentIsDeletedFalse(id)
                 .stream()
                 .map(courseStudentMapper::convertToDto).toList();
+    }
+    @Transactional
+    @Override
+    public void enroll(Long courseStudentId) {
+        CourseStudent courseStudentInDB = courseStudentRepository.findById(courseStudentId)
+                .orElseThrow(() -> new NoSuchElementException("CourseStudent could not be found"));
+        courseStudentInDB.setEnrolled(true);
+        courseStudentRepository.save(courseStudentInDB);
+
+        List<Lesson> lessonsOfThisCourse = lessonRepository.findAllByCourseId(courseStudentInDB.getCourse().getId());
+        Student studentEnrolledThisCourse = studentRepository.findById(courseStudentInDB.getStudent().getId())
+                .orElseThrow(() -> new NoSuchElementException("Student could not be found."));
+        lessonsOfThisCourse.forEach(lesson -> {
+            LessonStudent lessonStudent=new LessonStudent();
+            lessonStudent.setLesson(lesson);
+            lessonStudent.setStudent(studentEnrolledThisCourse);
+            lessonStudentRepository.save(lessonStudent);
+        });
     }
 }
