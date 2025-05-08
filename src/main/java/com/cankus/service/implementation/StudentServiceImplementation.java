@@ -5,8 +5,10 @@ import com.cankus.entity.Student;
 import com.cankus.mapper.StudentMapper;
 import com.cankus.repository.StudentRepository;
 import com.cankus.service.AddressService;
+import com.cankus.service.CourseStudentService;
 import com.cankus.service.StudentService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -17,11 +19,13 @@ public class StudentServiceImplementation implements StudentService {
     private final StudentRepository studentRepository;
     private final StudentMapper studentMapper;
     private final AddressService addressService;
+    private final CourseStudentService courseStudentService;
 
-    public StudentServiceImplementation(StudentRepository studentRepository , StudentMapper studentMapper, AddressService addressService) {
+    public StudentServiceImplementation(StudentRepository studentRepository , StudentMapper studentMapper, AddressService addressService , CourseStudentService courseStudentService) {
         this.studentRepository = studentRepository;
         this.studentMapper = studentMapper;
         this.addressService = addressService;
+        this.courseStudentService = courseStudentService;
     }
 
     public List<StudentDto> findAll(){
@@ -30,11 +34,12 @@ public class StudentServiceImplementation implements StudentService {
                 .map(studentMapper::convertToDto).collect(Collectors.toList());
     }
 
+    @Transactional
     @Override
     public void save(StudentDto studentDto) {
-        Student student = studentMapper.convertToEntity(studentDto);
-        studentRepository.save(student);
-
+        // 1) Convert DTO to Entity and save student
+        Student student = studentRepository.save(studentMapper.convertToEntity(studentDto));
+        courseStudentService.assignAllCourseToNewStudent(student.getId());
     }
 
     @Override
