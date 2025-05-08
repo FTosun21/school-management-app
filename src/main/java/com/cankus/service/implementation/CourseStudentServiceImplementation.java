@@ -5,6 +5,7 @@ import com.cankus.entity.*;
 import com.cankus.mapper.CourseStudentMapper;
 import com.cankus.repository.*;
 import com.cankus.service.CourseStudentService;
+import com.cankus.service.LessonStudentService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,14 +22,16 @@ public class CourseStudentServiceImplementation implements CourseStudentService 
     private final CourseStudentMapper courseStudentMapper;
     private final LessonRepository lessonRepository;
     private final LessonStudentRepository lessonStudentRepository;
+    private final LessonStudentService lessonStudentService;
 
-    public CourseStudentServiceImplementation(CourseStudentRepository courseStudentRepository, CourseRepository courseRepository, StudentRepository studentRepository, CourseStudentMapper courseStudentMapper, LessonRepository lessonRepository, LessonStudentRepository lessonStudentRepository) {
+    public CourseStudentServiceImplementation(CourseStudentRepository courseStudentRepository, CourseRepository courseRepository, StudentRepository studentRepository, CourseStudentMapper courseStudentMapper, LessonRepository lessonRepository, LessonStudentRepository lessonStudentRepository, LessonStudentService lessonStudentService) {
         this.courseStudentRepository = courseStudentRepository;
         this.courseRepository = courseRepository;
         this.studentRepository = studentRepository;
         this.courseStudentMapper = courseStudentMapper;
         this.lessonRepository = lessonRepository;
         this.lessonStudentRepository = lessonStudentRepository;
+        this.lessonStudentService = lessonStudentService;
     }
 
     @Override
@@ -88,7 +91,7 @@ public class CourseStudentServiceImplementation implements CourseStudentService 
     @Override
     public void enroll(Long courseStudentId) {
         CourseStudent courseStudentInDB = courseStudentRepository.findById(courseStudentId)
-                .orElseThrow(() -> new NoSuchElementException("CourseStudent could not be found"));
+                .orElseThrow(() -> new NoSuchElementException("Course student could not be found"));
         courseStudentInDB.setEnrolled(true);
         courseStudentRepository.save(courseStudentInDB);
 
@@ -100,6 +103,25 @@ public class CourseStudentServiceImplementation implements CourseStudentService 
             lessonStudent.setLesson(lesson);
             lessonStudent.setStudent(studentEnrolledThisCourse);
             lessonStudentRepository.save(lessonStudent);
+        });
+    }
+    @Transactional
+    @Override
+    public void drop(Long courseStudentId) {
+        CourseStudent courseStudentInDB=courseStudentRepository.findById(courseStudentId)
+                .orElseThrow(()-> new NoSuchElementException("Course student could not be found."));
+
+        // 1) Set enrolled to false
+        courseStudentInDB.setEnrolled(false);
+        courseStudentRepository.save(courseStudentInDB);
+        // 2) Delete LessonStudent records
+        //We do not want to store lessonStudent information if the student dropped.
+        List<Lesson> lessonsOfThisCourse = lessonRepository.findAllByCourseId(courseStudentInDB.getCourse().getId());
+
+        lessonsOfThisCourse.forEach(lesson -> {
+            lessonStudentService.removeLessonStudent(
+                    lesson.getId(),
+                    courseStudentInDB.getStudent().getId());
         });
     }
 }

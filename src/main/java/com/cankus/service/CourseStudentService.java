@@ -16,4 +16,5 @@ public interface CourseStudentService {
 
     void enroll(Long courseStudentId);
 
+    void drop(Long courseStudentId);
 }
