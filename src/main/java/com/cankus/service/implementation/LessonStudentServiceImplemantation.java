@@ -1,24 +1,28 @@
 package com.cankus.service.implementation;
 
+import com.cankus.dto.LessonStudentDto;
 import com.cankus.entity.CourseStudent;
 import com.cankus.entity.Lesson;
 import com.cankus.entity.LessonStudent;
-import com.cankus.entity.Student;
+import com.cankus.mapper.LessonStudentMapper;
 import com.cankus.repository.LessonStudentRepository;
 import com.cankus.service.LessonStudentService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Service
-public class LessonStudentServiceImplemantation implements LessonStudentService{
+public class LessonStudentServiceImplemantation implements LessonStudentService {
 
     private final LessonStudentRepository lessonStudentRepository;
+    private final LessonStudentMapper lessonStudentMapper;
 
-    public LessonStudentServiceImplemantation(LessonStudentRepository lessonStudentRepository) {
+    public LessonStudentServiceImplemantation(LessonStudentRepository lessonStudentRepository, LessonStudentMapper lessonStudentMapper) {
         this.lessonStudentRepository = lessonStudentRepository;
+        this.lessonStudentMapper = lessonStudentMapper;
     }
 
     @Transactional
@@ -37,6 +41,7 @@ public class LessonStudentServiceImplemantation implements LessonStudentService{
         // Save all lesson assignments in a batch operation for performance
         lessonStudentRepository.saveAll(lessonStudents);
     }
+
     @Override
     public void removeLessonStudent(Long lessonId, Long studentId) {
         lessonStudentRepository.findAllByLessonIdAndStudentId(lessonId, studentId)
@@ -45,6 +50,13 @@ public class LessonStudentServiceImplemantation implements LessonStudentService{
                     lessonStudentInDb.setDeleted(true);
                     lessonStudentRepository.save(lessonStudentInDb);
                 });
+    }
+
+    @Override
+    public List<LessonStudentDto> getLessonStudentsByInstructorId(Long instructorId) {
+        return lessonStudentRepository.findByLessonIsDeletedFalseAndStudentIsDeletedFalseAndLessonInstructorId(instructorId)
+                //.stream().map((element) -> modelMapper.map(element, LessonStudentDto.class)).toList();
+                .stream().map(lessonStudentMapper::convertToDto).toList();
     }
 
 
