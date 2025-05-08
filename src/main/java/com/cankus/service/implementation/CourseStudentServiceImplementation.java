@@ -1,8 +1,10 @@
 package com.cankus.service.implementation;
 
+import com.cankus.dto.CourseStudentDto;
 import com.cankus.entity.Course;
 import com.cankus.entity.CourseStudent;
 import com.cankus.entity.Student;
+import com.cankus.mapper.CourseStudentMapper;
 import com.cankus.repository.CourseRepository;
 import com.cankus.repository.CourseStudentRepository;
 import com.cankus.repository.StudentRepository;
@@ -20,11 +22,13 @@ public class CourseStudentServiceImplementation implements CourseStudentService 
     private final CourseStudentRepository courseStudentRepository;
     private final CourseRepository courseRepository;
     private final StudentRepository studentRepository;
+    private final CourseStudentMapper courseStudentMapper;
 
-    public CourseStudentServiceImplementation(CourseStudentRepository courseStudentRepository, CourseRepository courseRepository, StudentRepository studentRepository ) {
+    public CourseStudentServiceImplementation(CourseStudentRepository courseStudentRepository, CourseRepository courseRepository, StudentRepository studentRepository, CourseStudentMapper courseStudentMapper) {
         this.courseStudentRepository = courseStudentRepository;
         this.courseRepository = courseRepository;
         this.studentRepository = studentRepository;
+        this.courseStudentMapper = courseStudentMapper;
     }
 
     @Override
@@ -72,5 +76,12 @@ public class CourseStudentServiceImplementation implements CourseStudentService 
                 .collect(Collectors.toList());
         // 4. Toplu kaydet
         courseStudentRepository.saveAll(courseStudents);
+    }
+
+    @Override
+    public List<CourseStudentDto> findAllByStudentId(Long id) {
+        return courseStudentRepository.findByStudentIdAndCourseIsDeletedFalseAndStudentIsDeletedFalse(id)
+                .stream()
+                .map(courseStudentMapper::convertToDto).toList();
     }
 }

@@ -2,6 +2,7 @@ package com.cankus.controller;
 
 import com.cankus.dto.StudentDto;
 import com.cankus.enums.State;
+import com.cankus.service.CourseStudentService;
 import com.cankus.service.StudentService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -14,9 +15,11 @@ import org.springframework.web.bind.annotation.*;
 public class StudentController {
 
     private final StudentService studentService;
+    private final CourseStudentService courseStudentService;
 
-    public StudentController(StudentService studentService) {
+    public StudentController(StudentService studentService, CourseStudentService courseStudentService) {
         this.studentService = studentService;
+        this.courseStudentService = courseStudentService;
     }
 
     @GetMapping("/create")
@@ -41,14 +44,14 @@ public class StudentController {
         return "redirect:/student/create";
     }
 
-    @GetMapping("update/{id}")
+    @GetMapping("/update/{id}")
     public String getUpdatePage(@PathVariable Long id, Model model) {
         model.addAttribute("student", studentService.findById(id));
         model.addAttribute("states", State.values());
         return "student/student-update";
     }
 
-    @PostMapping("update/{id}")
+    @PostMapping("/update/{id}")
     public String updateStudent(@Valid @ModelAttribute("student") StudentDto student,
                                 BindingResult bindingResult,
                                 Model model) {
@@ -66,5 +69,13 @@ public class StudentController {
         studentService.delete(id);
         return "redirect:/student/create";
     }
+
+    @GetMapping("/assign/{id}")
+    public String getAllStudent(@PathVariable Long id, Model model) {
+        model.addAttribute("studentCourses",courseStudentService.findAllByStudentId(id));
+        return "student/student-courses";
+    }
+
+
 
 }
