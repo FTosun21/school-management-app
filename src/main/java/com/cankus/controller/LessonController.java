@@ -42,14 +42,8 @@ public class LessonController {
             model.addAttribute("instructors", userService.getAllInstructors());
             return "lesson/lesson-create";
         }
-        /*
-        Todo --> US10--> While new lesson is created,
-                this lesson should assign to the all students
-                who have already been enrolled to the course of this lesson.
-        */
         lessonService.save(lesson);
         return "redirect:/lesson/create";
-
     }
 
     @GetMapping("/update/{id}")

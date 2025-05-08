@@ -99,14 +99,14 @@ VALUES ('2022-01-05 00:00:00', 1, false, '2022-01-05 00:00:00', 1, 'Admin'),
         ('2022-01-05 00:00:00', 1, false, '2022-01-05 00:00:00', 1, 3, 3, false),
         ('2022-01-05 00:00:00', 1, false, '2022-01-05 00:00:00', 1, 3, 4, false);
 
--- INSERT INTO lesson_student(insert_date_time, insert_user_id, is_deleted, last_update_date_time, last_update_user_id,
---                            lesson_id, student_id)
--- VALUES ('2022-01-05 00:00:00', 1, false, '2022-01-05 00:00:00', 1, 3, 1),
---        ('2022-01-05 00:00:00', 1, false, '2022-01-05 00:00:00', 1, 4, 1),
---        ('2022-01-05 00:00:00', 1, false, '2022-01-05 00:00:00', 1, 3, 2),
---        ('2022-01-05 00:00:00', 1, false, '2022-01-05 00:00:00', 1, 4, 2);
---
---
+ INSERT INTO lesson_student(insert_date_time, insert_user_id, is_deleted, last_update_date_time, last_update_user_id,
+                            lesson_id, student_id)
+ VALUES ('2022-01-05 00:00:00', 1, false, '2022-01-05 00:00:00', 1, 3, 1),
+        ('2022-01-05 00:00:00', 1, false, '2022-01-05 00:00:00', 1, 4, 1),
+        ('2022-01-05 00:00:00', 1, false, '2022-01-05 00:00:00', 1, 3, 2),
+        ('2022-01-05 00:00:00', 1, false, '2022-01-05 00:00:00', 1, 4, 2);
+
+
 --
 -- INSERT INTO assessments(insert_date_time, insert_user_id, is_deleted, last_update_date_time, last_update_user_id,
 --                         lesson_student_id, grade_date, grade, instructor_impression_of_student)

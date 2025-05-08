@@ -1,9 +1,5 @@
 package com.cankus.dto;
 
-import com.cankus.entity.Course;
-import com.cankus.entity.Student;
-import jakarta.persistence.ManyToOne;
-
 public class CourseStudentDto {
 
     private Long id;

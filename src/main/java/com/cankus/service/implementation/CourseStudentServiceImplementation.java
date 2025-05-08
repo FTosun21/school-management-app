@@ -1,6 +1,5 @@
 package com.cankus.service.implementation;
 
-import com.cankus.dto.CourseStudentDto;
 import com.cankus.entity.Course;
 import com.cankus.entity.CourseStudent;
 import com.cankus.mapper.CourseStudentMapper;
@@ -9,8 +8,6 @@ import com.cankus.repository.CourseStudentRepository;
 import com.cankus.repository.StudentRepository;
 import com.cankus.service.CourseStudentService;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
@@ -35,5 +32,18 @@ public class CourseStudentServiceImplementation implements CourseStudentService 
                 .stream()
                 .map(student -> new CourseStudent(false,course,student))
                 .forEach(courseStudentRepository::save);
+    }
+
+    //*us8-2 implement service method ->CSRepository
+    @Override
+    public void removeCourseStudentByCourse(Long courseId) {
+        //*us8-4 --> CSImpl
+        courseStudentRepository.findAllByCourseId(courseId)
+                .forEach(courseStudent -> {
+                    CourseStudent courseStudentInDB=courseStudentRepository.findById(courseStudent.getId())
+                            .orElseThrow(()->new NoSuchElementException("CourseStudent could not be found."));
+                    courseStudentInDB.setDeleted(true);
+                    courseStudentRepository.save(courseStudentInDB);
+                });
     }
 }

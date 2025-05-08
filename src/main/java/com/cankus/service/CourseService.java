@@ -18,4 +18,6 @@ public interface CourseService {
 
     boolean hasAssignedCourses(Long managerId);
 
+    // *us8-10   -->CSImpl
+    boolean checkAssignedLesson(Long courseId);
 }

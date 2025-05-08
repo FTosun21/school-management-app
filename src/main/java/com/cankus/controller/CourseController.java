@@ -70,12 +70,16 @@ public class CourseController {
 
     @GetMapping("/delete/{id}")
     public String deleteCourse(@PathVariable Long id, RedirectAttributes redirectAttributes){
-        /** TODO US8: Before deleting a course, check if it has lessons.
-                If lessons exist, do not delete and show message: "This Course has either one or more than one lessons. Not allowed to delete".
-                If no lessons, first remove course from all students (courseStudent), then soft-delete course.
-                On successful delete, show message: "This Course is successfully deleted".
-         */
+        // *us8 -12
+       if(courseService.checkAssignedLesson(id)){
+           redirectAttributes.addFlashAttribute("error",
+                   "This Course has either one or more than one lessons. Not allowed to delete");
+           return "redirect:/course/create";
+       }
+
         courseService.delete(id);
+        // *us8 -13
+        redirectAttributes.addFlashAttribute("success", "This Course is successfully deleted");
         return "redirect:/course/create";
     }
 
