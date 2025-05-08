@@ -3,11 +3,13 @@ package com.cankus.mapper;
 import com.cankus.dto.LessonStudentDto;
 import com.cankus.entity.LessonStudent;
 import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Component;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Component
 public class LessonStudentMapper {
 
     private final ModelMapper modelMapper;
