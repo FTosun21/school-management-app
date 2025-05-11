@@ -17,9 +17,9 @@ public class CourseController {
     private final UserService userService;
 
 
-    public CourseController(CourseService courseService, UserService userService, UserService userService1) {
+    public CourseController(CourseService courseService, UserService userService ) {
         this.courseService = courseService;
-        this.userService = userService1;
+        this.userService = userService;
     }
 
     @GetMapping("/create")
@@ -33,7 +33,6 @@ public class CourseController {
     @PostMapping("/create")
     public String createCourse(@Valid @ModelAttribute("course") CourseDto course,
                                BindingResult bindingResult,
-                               //RedirectAttributes redirectAttributes,
                                Model model){
 
         if(bindingResult.hasErrors()){
@@ -41,8 +40,6 @@ public class CourseController {
             model.addAttribute("managers",userService.getAllManagers());
             return "course/course-create";
         }
-        //Todo --> US6 AC.--> While new course is created, newly created course should assign to all students with isEnrolled false.
-
         courseService.save(course);
         return  "redirect:/course/create";
     }
@@ -57,7 +54,6 @@ public class CourseController {
     @PostMapping("/update/{id}")
     public String updateCourse(@Valid @ModelAttribute("course") CourseDto course,
                                BindingResult bindingResult,
-                               //RedirectAttributes redirectAttributes,
                                Model model){
         if(bindingResult.hasErrors()){
             model.addAttribute("managers",userService.getAllManagers());
