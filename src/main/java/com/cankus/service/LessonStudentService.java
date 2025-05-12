@@ -13,4 +13,6 @@ public interface LessonStudentService {
     void removeLessonStudent(Long lessonId,Long studentId);
 
     List<LessonStudentDto> getLessonStudentsByInstructorId(Long instructorId);
+
+    LessonStudentDto findById(Long id);
 }

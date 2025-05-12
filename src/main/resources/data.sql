@@ -107,10 +107,10 @@ VALUES ('2022-01-05 00:00:00', 1, false, '2022-01-05 00:00:00', 1, 'Admin'),
         ('2022-01-05 00:00:00', 1, false, '2022-01-05 00:00:00', 1, 4, 2);
 
 
---
--- INSERT INTO assessments(insert_date_time, insert_user_id, is_deleted, last_update_date_time, last_update_user_id,
---                         lesson_student_id, grade_date, grade, instructor_impression_of_student)
--- VALUES ('2022-01-05 00:00:00', 1, false, '2022-01-05 00:00:00', 1, 1, '2022-01-05 00:00:00', 50, 'Not Bad'),
---        ('2022-01-05 00:00:00', 1, false, '2022-01-05 00:00:00', 1, 1, '2022-01-05 00:00:00', 70, 'Good'),
---        ('2022-01-05 00:00:00', 1, false, '2022-01-05 00:00:00', 1, 2, '2022-01-05 00:00:00', 80, 'Good'),
---        ('2022-01-05 00:00:00', 1, false, '2022-01-05 00:00:00', 1, 2, '2022-01-05 00:00:00', 10, 'Are you serious');
+
+ INSERT INTO assessments(insert_date_time, insert_user_id, is_deleted, last_update_date_time, last_update_user_id,
+                         lesson_student_id, grade_date, grade, instructor_impression_of_student)
+ VALUES ('2022-01-05 00:00:00', 1, false, '2022-01-05 00:00:00', 1, 1, '2022-01-05 00:00:00', 50, 'Not Bad'),
+        ('2022-01-05 00:00:00', 1, false, '2022-01-05 00:00:00', 1, 1, '2022-01-05 00:00:00', 70, 'Good'),
+        ('2022-01-05 00:00:00', 1, false, '2022-01-05 00:00:00', 1, 2, '2022-01-05 00:00:00', 80, 'Good'),
+        ('2022-01-05 00:00:00', 1, false, '2022-01-05 00:00:00', 1, 2, '2022-01-05 00:00:00', 10, 'Are you serious');
