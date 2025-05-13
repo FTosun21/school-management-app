@@ -10,4 +10,6 @@ public interface AssessmentService {
 
     AssessmentDto getAssessmentDtoWithLessonStudent(Long lessonStudentId);
 
+    void save(AssessmentDto assessmentDto,Long lessonStudentId);
+
 }
