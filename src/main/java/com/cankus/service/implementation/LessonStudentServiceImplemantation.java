@@ -59,5 +59,12 @@ public class LessonStudentServiceImplemantation implements LessonStudentService 
                 .stream().map(lessonStudentMapper::convertToDto).toList();
     }
 
+    @Override
+    public LessonStudentDto findById(Long id) {
+        LessonStudent lessonStudentInDB = lessonStudentRepository.findById(id).orElseThrow(() ->
+                new NoSuchElementException("LessonStudent could not be found"));
+        return lessonStudentMapper.convertToDto(lessonStudentInDB);
+    }
+
 
 }

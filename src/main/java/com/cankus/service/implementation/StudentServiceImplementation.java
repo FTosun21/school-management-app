@@ -63,4 +63,9 @@ public class StudentServiceImplementation implements StudentService {
         studentInDB.setDeleted(true);
         studentRepository.save(studentInDB);
     }
+
+    @Override
+    public boolean isStudentEmailRegistered(String email) {
+        return studentRepository.findAll().stream().anyMatch(student -> student.getEmail().equals(email));
+    }
 }
