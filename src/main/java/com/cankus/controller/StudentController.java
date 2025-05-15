@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/student")
@@ -33,7 +34,12 @@ public class StudentController {
     @PostMapping("/create")
     public String createStudent(@Valid @ModelAttribute("student") StudentDto student,
                                 BindingResult bindingResult,
+                                RedirectAttributes redirectAttributes,
                                 Model model) {
+        if (studentService.isStudentEmailRegistered(student.getEmail())) {
+            redirectAttributes.addFlashAttribute("error", "This email address has been already registered.");
+            return "redirect:/student/create";
+        }
         if (bindingResult.hasErrors()) {
             model.addAttribute("states", State.values());
             model.addAttribute("students", studentService.findAll());

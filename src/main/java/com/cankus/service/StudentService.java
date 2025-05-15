@@ -15,4 +15,7 @@ public interface StudentService {
     void update(StudentDto studentDto);
 
     void delete(Long id);
+
+    boolean isStudentEmailRegistered(String email);
+
 }
